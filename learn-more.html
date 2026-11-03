@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn More - Agri-Connect</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('images/learn-more-background.jpg');
+            background-size: cover;
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+        }
+
+        .header h1 {
+            font-size: 50px;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: white;
+        }
+
+        .header .menu {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .header .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .header .menu a:hover {
+            color: #4CAF50;
+        }
+
+        
+        .content {
+            margin-top: 120px;
+            padding: 20px;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: rgba(0, 0, 0, 0.6); 
+            border-radius: 15px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .content h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .content h3 {
+            font-size: 28px;
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        .content p, .content ul {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+
+        .content ul {
+            text-align: left;
+            margin-left: 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        
+        .social-media {
+            margin-top: 30px;
+        }
+
+        .social-media p {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .social-icon {
+            width: 40px;
+            margin: 0 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 36px;
+            }
+
+            .content h2 {
+                font-size: 24px;
+            }
+
+            .content h3 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+   
+    <div class="header">
+        <h1>About Agri-Connect</h1>
+        <div class="menu">
+            <a href="login.html">Back to Login</a>
+            <a href="farmer-dashboard.html">Back</a>
+        </div>
+    </div>
+
+    
+    <div class="content learn-more-content">
+        <h2>What is Agri-Connect?</h2>
+        <p>Agri-Connect is designed to assist farmers in selling their products, renting agricultural machinery, and hiring workers. Our platform ensures seamless transactions and reliable services to enhance productivity in the agricultural sector.</p>
+
+        <h3>How to Use Agri-Connect</h3>
+        <ul>
+            <li><strong>Farmers:</strong> After logging in, you can access features such as selling products, renting machinery, and hiring workers.</li>
+            <li><strong>Admins:</strong> You can view farmer profiles, manage users, and oversee platform operations.</li>
+            <li><strong>Workers:</strong> You can register with your Aadhar card and password, view available jobs, and update your profile with location and fees.</li>
+        </ul>
+
+        <p>If you're new to the platform, please contact our support team for help with registration or other inquiries.</p>
+
+       
+        <div class="social-media">
+            <p>Follow us on:</p>
+            <a href="https://facebook.com"><img src="images/facebook-icon.png" alt="Facebook" class="social-icon"></a>
+            <a href="https://twitter.com"><img src="images/twitter-icon.png" alt="Twitter" class="social-icon"></a>
+            <a href="https://instagram.com"><img src="images/instagram-icon.png" alt="Instagram" class="social-icon"></a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Machinery - Agree Connect</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('images/add-machinery-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 700px;
+            margin: 40px auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border: 1px solid green;
+            outline: none;
+        }
+
+        button {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: darkgreen;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Add New Machinery</h1>
+    </div>
+
+    <div class="content">
+        <div class="form-container">
+            <form id="addMachineryForm" enctype="multipart/form-data">
+                <label for="machineryName">Machinery Name:</label>
+                <input type="text" id="machineryName" name="machineryName" required>
+
+                <label for="ownerName">Owner Name:</label>
+                <input type="text" id="ownerName" name="ownerName" required>
+
+                <label for="ownerContact">Owner Contact:</label>
+                <input type="text" id="ownerContact" name="ownerContact" required>
+
+                <label for="ownerEmail">Owner Email:</label>
+                <input type="email" id="ownerEmail" name="ownerEmail" required>
+
+                <label for="usageFee">Usage Fee per Hour (₹):</label>
+                <input type="number" id="usageFee" name="usageFee" required>
+
+                <label for="description">Description of Machinery:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+
+                <label for="machineryImage">Upload Machinery Image:</label>
+                <input type="file" id="machineryImage" name="machineryImage" accept="image/*" required>
+
+                <button type="submit" onclick="addMachinery(event)">Add Machinery</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function addMachinery(event) {
+            event.preventDefault();
+            const form = document.getElementById('addMachineryForm');
+            const formData = new FormData(form);
+
+            
+            console.log('Machinery added with image:', formData.get('machineryImage').name);
+        }
+    </script>
+</body>
+</html>

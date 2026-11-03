@@ -1,0 +1,200 @@
+
+
+body {
+    font-family: 'Times New Roman', serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+
+.header {
+    
+    color: rgb(7, 6, 6);
+    padding: 10px;
+    text-align: center;
+}
+
+.menu a {
+    color: rgb(7, 6, 6);
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.content {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(243, 240, 240, 0.8);
+    border-radius: 8px;
+}
+
+.login-page form, .worker-registration-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-page label, .worker-registration-form label {
+    margin-top: 10px;
+}
+
+.login-page input, .worker-registration-form input, .login-page select {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-page button, .worker-registration-form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-page button:hover, .worker-registration-form button:hover {
+    background-color: #45a049;
+}
+
+
+.index-background {
+    background-image: url('images/home-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.login-background {
+    background-image: url('images/login-background.jpg');
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+}
+
+.farmer-dashboard-background {
+    background-image: url('images/farmer-dashboard-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.admin-dashboard-background {
+    background-image: url('images/admin-dashboard-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.registerworker-dashboard-background {
+    background-image: url('images/register-worker-dashboard-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.sell-background {
+    background-image: url('images/sell-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.rent-background {
+    background-image: url('images/rent-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.book-workers-background {
+    background-image: url('images/book-workers-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.index-background {
+    background-image: url('images/home-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.login-background {
+    background-image: url('images/login-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.farmer-dashboard-background {
+    background-image: url('images/farmer-dashboard-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.admin-dashboard-background {
+    background-image: url('images/admin-dashboard-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.worker-dashboard-background {
+    background-image: url('images/worker-dashboard-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.sell-background {
+    background-image: url('images/sell-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.rent-background {
+    background-image: url('images/rent-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.book-workers-background {
+    background-image: url('images/book-workers-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+
+.product-item {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+}
+
+.product-item img {
+    width: 100px;
+    height: 100px;
+    background-color: #ddd;
+    margin-right: 20px;
+}
+
+.product-item .details {
+    flex: 1;
+}
+
+.product-item .details h3 {
+    margin: 0 0 10px;
+}
+
+.product-item .details p {
+    margin: 0;
+}
+
+
+
+@media (max-width: 768px) {
+    .menu a {
+        display: block;
+        margin: 10px 0;
+    }
+}

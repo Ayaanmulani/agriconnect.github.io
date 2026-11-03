@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Successful</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f3f4f6;
+    }
+
+    .payment-container {
+      text-align: center;
+    }
+
+    .circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #4caf50;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      margin: 0 auto 20px;
+      animation: ripple 1s ease-out infinite;
+    }
+
+    @keyframes ripple {
+      0% {
+        box-shadow: 0 0 15px rgba(76, 175, 80, 0.6);
+      }
+      100% {
+        box-shadow: 0 0 30px rgba(76, 175, 80, 0);
+      }
+    }
+
+    .checkmark {
+      width: 50px;
+      height: 50px;
+      stroke-width: 3;
+      stroke: #fff;
+      stroke-miterlimit: 10;
+      fill: none;
+      animation: fadeIn 0.3s ease-out forwards, checkmark-draw 0.5s ease-out 0.3s forwards;
+    }
+
+    .checkmark-circle {
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      animation: circle-draw 0.6s ease-out forwards;
+    }
+
+    @keyframes circle-draw {
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .checkmark-check {
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: checkmark-draw 0.5s ease-out forwards;
+    }
+
+    @keyframes checkmark-draw {
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .success-message {
+      font-size: 18px;
+      color: #4caf50;
+      margin: 0;
+      opacity: 0;
+      animation: fadeInText 0.8s ease-out 1.2s forwards;
+    }
+
+    @keyframes fadeInText {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-container">
+    <div class="circle">
+      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+        <path class="checkmark-check" fill="none" d="M14 27l8 8 16-16"/>
+      </svg>
+    </div>
+    <p class="success-message">Payment Done</p>
+  </div>
+
+  <script>
+    
+    setTimeout(() => {
+      window.location.href = "farmer-dashboard.html"; 
+    }, 3000); 
+  </script>
+</body>
+</html>

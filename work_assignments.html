@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workers Dashboard and Work History Chart</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            overflow-x: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #4CAF50, #2E8B57);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 2.5em;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .menu {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding: 12px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease, transform 0.2s;
+            border-radius: 30px;
+        }
+        .menu a:hover {
+            background-color: #4CAF50;
+            transform: scale(1.1);
+        }
+        .content {
+            padding: 50px 20px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.02);
+        }
+        .total-row {
+            font-weight: bold;
+            background-color: #e8f5e9;
+        }
+        table td, table th {
+            border-radius: 6px;
+        }
+        table th {
+            font-size: 1.1em;
+        }
+
+        /* Center headings */
+        h2 {
+            text-align: center;
+        }
+
+        /* Profile Section Styles */
+        .profile-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+            width: 80%;
+            margin-left: 10%;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        /* Styling for the profile image */
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%; /* Makes the profile image circular */
+            object-fit: cover;
+            border: 3px solid #4CAF50;
+            transition: transform 0.3s ease;
+        }
+
+        /* Profile name and other details */
+        .profile-details {
+            max-width: 600px;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .profile-details h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #333;
+        }
+
+        .profile-details p {
+            margin: 10px 0;
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        .availability {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .btn-edit, .btn-confirm {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.1em;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-edit:hover, .btn-confirm:hover {
+            background-color: #2E8B57;
+            transform: scale(1.05);
+        }
+
+        /* Editable input fields style */
+        .editable {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 1.1em;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        /* Hide sections by default */
+        .section {
+            display: none;
+        }
+
+        /* Display section when active */
+        .section.active {
+            display: block;
+        }
+
+        /* Fade-in animation for sections */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header">
+        Workers Dashboard
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="menu">
+        <a href="javascript:void(0);" onclick="showSection('profileSection')">Profile</a>
+        <a href="javascript:void(0);" onclick="showSection('assignedWorkSection')">Assigned Work</a>
+        <a href="javascript:void(0);" onclick="showSection('workHistorySection')">Work History</a>
+        <a href="#">Payment</a>
+        <a href="#">Logout</a>
+    </div>
+
+    <!-- Profile Section -->
+    <div class="content section" id="profileSection">
+        <div class="profile-container">
+            <div class="profile-img-container">
+                <img src="https://via.placeholder.com/120" alt="Profile Image" class="profile-img" id="profileImg">
+            </div>
+            <div class="profile-details">
+                <h3>
+                    <span class="name" id="workerName">John Doe</span>
+                    <span class="availability" id="workerStatus">(Available)</span>
+                </h3>
+                <p><strong>Address:</strong> <span id="workerAddress">Village A, Rural Area</span></p>
+                <p><strong>Status:</strong> <span id="workerStatusText">Available for tasks</span></p>
+                <p><strong>Mobile No:</strong> <span id="workerMobile">+91 9876543210</span></p>
+                <p><strong>Worker ID:</strong> <span id="workerId">#12345</span></p>
+                <button class="btn-edit" onclick="editProfile()">Edit Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assigned Work Section -->
+    <div class="content section" id="assignedWorkSection">
+        <h2>Assigned Work Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Farmer</th>
+                    <th>Location</th>
+                    <th>Timetable</th>
+                    <th>Work</th>
+                    <th>Wages</th>
+                    <th>Commission</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Farmer</td>
+                    <td>Village A</td>
+                    <td>9 AM - 5 PM</td>
+                    <td>Plowing</td>
+                    <td>₹500</td>
+                    <td>10%</td>
+                </tr>
+                <tr>
+                    <td>Jane Farmer</td>
+                    <td>Village B</td>
+                    <td>10 AM - 4 PM</td>
+                    <td>Harvesting</td>
+                    <td>₹600</td>
+                    <td>15%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Work History Section -->
+    <div class="content section" id="workHistorySection">
+        <h2>Work History Chart</h2>
+        <table id="workHistoryTable">
+            <thead>
+                <tr>
+                    <th>Work</th>
+                    <th>Working Hours</th>
+                    <th>Revenue</th>
+                </tr>
+            </thead>
+            <tbody id="workHistoryBody">
+                <tr>
+                    <td>Sample Work</td>
+                    <td>5</td>
+                    <td>₹1000</td>
+                </tr>
+                <tr>
+                    <td>Another Task</td>
+                    <td>8</td>
+                    <td>₹1600</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="total-row">
+                    <td>Total</td>
+                    <td id="totalHours">13</td>
+                    <td id="totalRevenue">₹2600</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show the selected section with a fade-in effect
+            const activeSection = document.getElementById(sectionId);
+            activeSection.classList.add('active');
+        }
+
+        // Function to toggle edit mode for Profile Section
+        function editProfile() {
+            const profileDetails = document.querySelector('.profile-details');
+            const isEditable = profileDetails.classList.contains('editable');
+
+            if (isEditable) {
+                // Save changes here (you can add AJAX calls or form submissions as needed)
+                profileDetails.classList.remove('editable');
+                const fields = profileDetails.querySelectorAll('.editable-input');
+                fields.forEach(field => {
+                    field.contentEditable = false;
+                    field.style.border = 'none';
+                });
+                // Optionally, change button text back to "Edit Profile"
+                document.querySelector('.btn-edit').textContent = 'Edit Profile';
+            } else {
+                // Make fields editable
+                profileDetails.classList.add('editable');
+                const fields = profileDetails.querySelectorAll('span');
+                fields.forEach(field => {
+                    if (field.id !== 'workerStatus') { // Exclude the availability status from being editable
+                        field.contentEditable = true;
+                        field.classList.add('editable-input');
+                        field.style.border = '1px solid #ddd';
+                        field.style.padding = '2px';
+                    }
+                });
+                // Optionally, change button text to "Save Changes"
+                document.querySelector('.btn-edit').textContent = 'Save Changes';
+            }
+        }
+
+        // Initially show the Profile section
+        showSection('profileSection');
+    </script>
+
+</body>
+</html>

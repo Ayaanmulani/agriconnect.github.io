@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Connect - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+       
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            background-color: #f8f8f8;
+        }
+
+        .login-background {
+            position: relative;
+            background-image: url('images/login-background1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .login-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('images/login-background1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            filter: blur(8px);
+            z-index: -1;
+        }
+
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+        }
+
+        .header h1 {
+            font-size: 50px;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .header .menu {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .header .menu a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .header .menu a:hover {
+            color: #4CAF50;
+        }
+
+        .login-page {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .login-widget label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+            text-align: left;
+            margin-left: 10px;
+            color: black;
+        }
+
+        .login-widget input, .login-widget select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .login-widget input:focus, .login-widget select:focus {
+            border-color: #4CAF50;
+        }
+
+        .login-widget button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-widget button:hover {
+            background-color: #45a049;
+        }
+
+        .social-media {
+            margin-top: 30px;
+        }
+
+        .social-media p {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: black;
+        }
+
+        .social-icon {
+            width: 40px;
+            margin: 0 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .login-widget input:hover, .login-widget select:hover {
+            border-color: #4CAF50;
+        }
+
+        .login-widget button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="login-background">
+
+    <div class="header">
+        <h1>Agri-Connect</h1>
+        <p>Your all-in-one platform for agricultural solutions.</p>
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <a href="register.html">Register</a>
+        </div>
+    </div>
+
+    <div class="content login-page">
+        <div class="login-widget">
+            <form id="loginForm" action="login.php" method="POST">
+                <input type="hidden" name="action" value="login">
+                <label for="aadhar">Aadhar Number:</label>
+                <input type="text" id="aadhar" name="aadhar" placeholder="Enter your 12-digit Aadhar number" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <button type="submit">Login</button>
+            </form>
+            <br>
+            <a href="#" onclick="toggleForgotPassword();">Forgot Password?</a>
+        </div>
+
+        <div id="forgotPasswordWidget" class="login-widget" style="display: none;">
+            <form id="forgotPasswordForm" action="login_reset_password.php" method="POST">
+                <input type="hidden" name="action" value="forgot_password">
+                <label for="forgotAadhar">Aadhar Number:</label>
+                <input type="text" id="forgotAadhar" name="aadhar" placeholder="Enter your 12-digit Aadhar number" required>
+                <label for="resetEmail">Registered Email:</label>
+                <input type="email" id="resetEmail" name="email" placeholder="Enter your registered email" required>
+                <label for="resetPhone">Registered Phone Number:</label>
+                <input type="text" id="resetPhone" name="phone" placeholder="Enter your registered phone number" required>
+                <label for="newPassword">New Password:</label>
+                <input type="password" id="newPassword" name="new_password" placeholder="Enter your new password" required>
+                <button type="submit">Reset Password</button>
+            </form>
+            <br>
+            <a href="login_reset_password_help.php">Help</a>
+        </div>
+        
+        <div class="social-media">
+            <p>Follow us on:</p>
+            <a href="https://facebook.com"><img src="images/facebook-icon.png" alt="Facebook" class="social-icon"></a>
+            <a href="https://twitter.com"><img src="images/twitter-icon.png" alt="Twitter" class="social-icon"></a>
+            <a href="https://instagram.com"><img src="images/instagram-icon.png" alt="Instagram" class="social-icon"></a>
+        </div>
+    </div>
+
+    <script>
+        function toggleForgotPassword() {
+            const loginWidget = document.querySelector('.login-widget');
+            const forgotPasswordWidget = document.getElementById('forgotPasswordWidget');
+            const aadharInput = document.getElementById('aadhar');
+            const forgotAadharInput = document.getElementById('forgotAadhar');
+    
+            if (forgotPasswordWidget.style.display === 'none') {
+                if (aadharInput.value) {
+                    forgotAadharInput.value = aadharInput.value;
+                    forgotAadharInput.readOnly = true;
+                }
+                loginWidget.style.display = 'none';
+                forgotPasswordWidget.style.display = 'block';
+            } else {
+                forgotAadharInput.readOnly = false;
+                loginWidget.style.display = 'block';
+                forgotPasswordWidget.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

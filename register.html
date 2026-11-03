@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Connect - Registration</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('images/index-background.jpg');
+            background-size: cover;
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+
+        .menu a:hover {
+            text-decoration: underline;
+        }
+
+        /* Content Styles */
+        .content {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .content h1 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .registration-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .registration-form label {
+            font-size: 18px;
+        }
+
+        .registration-form input,
+        .registration-form select,
+        .registration-form textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .registration-form input:focus,
+        .registration-form select:focus,
+        .registration-form textarea:focus {
+            border-color: #4CAF50;
+        }
+
+        .registration-form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .registration-form button:hover {
+            background-color: #45a049;
+        }
+
+     
+        .land-crop-fields, .admin-passkey-field, .worker-fields {
+            display: none; 
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .land-crop-fields.show,
+        .admin-passkey-field.show,
+        .worker-fields.show {
+            display: block;
+            opacity: 1;
+        }
+
+       
+        @media (max-width: 768px) {
+            .menu a {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+
+       
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: -10px;
+        }
+
+        .valid-message {
+            color: green;
+            font-size: 14px;
+            margin-top: -10px;
+        }
+    </style>
+    <script>
+        function toggleFields() {
+            const userType = document.getElementById('userType').value;
+            const landCropFields = document.getElementById('landCropFields');
+            const adminPassKeyField = document.getElementById('adminPassKeyField');
+            const workerFields = document.getElementById('workerFields');
+
+            
+            landCropFields.classList.remove('show');
+            adminPassKeyField.classList.remove('show');
+            workerFields.classList.remove('show');
+
+        
+            if (userType === 'farmer') {
+                landCropFields.classList.add('show');
+            } else if (userType === 'admin') {
+                adminPassKeyField.classList.add('show');
+            } else if (userType === 'worker') {
+                workerFields.classList.add('show');
+            }
+        }
+
+        function validateForm(event) {
+            const userType = document.getElementById('userType').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const adminPassKey = document.getElementById('adminPassKey').value;
+
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                event.preventDefault(); 
+                return false;
+            }
+
+            
+            if (userType === 'admin' && adminPassKey !== '123') {
+                alert('Invalid Admin Pass Key');
+                event.preventDefault(); 
+                return false;
+            }
+
+            return true;
+        }
+
+        function checkPasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const message = document.getElementById('passwordMessage');
+
+            if (password !== confirmPassword) {
+                message.textContent = "Passwords do not match!";
+                message.classList.add('error-message');
+                message.classList.remove('valid-message');
+            } else {
+                message.textContent = "Passwords match.";
+                message.classList.add('valid-message');
+                message.classList.remove('error-message');
+            }
+        }
+
+        
+        function validateEmail() {
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('emailMessage');
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+            if (!emailRegex.test(email)) {
+                message.textContent = "Please enter a valid email address.";
+                message.classList.add('error-message');
+                message.classList.remove('valid-message');
+            } else {
+                message.textContent = "Valid email.";
+                message.classList.add('valid-message');
+                message.classList.remove('error-message');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>Registration for Agri-Connect</h1>
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+        </div>
+    </div>
+
+    <div class="content registration-form">
+        <form id="registrationForm" action="register-connect.php" method="post" enctype="multipart/form-data" onsubmit="validateForm(event)">
+            <label for="userType">User Type:</label>
+            <select id="userType" name="type" required onchange="toggleFields()">
+                <option value="none">Select User Type</option>
+                <option value="farmer">Farmer</option>
+                <option value="worker">Worker</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <label for="aadhar">Aadhar Number:</label>
+            <input type="text" id="aadhar" placeholder="Enter your Aadhar number" name="aadhar" required>
+
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" placeholder="Enter your full name" name="name" required>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" placeholder="Enter your location" name="location" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter your email" name="email" required oninput="validateEmail()">
+            <div id="emailMessage"></div>
+
+            <label for="phone">Phone No:</label>
+            <input type="text" id="phone" placeholder="Enter your phone number" name="phone" required>
+
+            <label for="profileImage">Profile Image:</label>
+            <input type="file" id="profileImage" accept="image/*" name="profileImage" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Create a password" name="password" required>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm your password" name="confirmPassword" required oninput="checkPasswordMatch()">
+            <div id="passwordMessage"></div>
+
+            
+            <div id="landCropFields" class="land-crop-fields">
+                <div style="margin-bottom: 15px;">
+                    <label for="landSize" style="display: block; font-size: 18px; margin-bottom: 8px;">Farmland Size (acres):</label>
+                    <input type="text" id="landSize" name="landSize" placeholder="Enter size in acres" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="cropsGrown" style="display: block; font-size: 18px; margin-bottom: 8px;">Crops Grown:</label>
+                    <input type="text" id="cropsGrown" name="cropsGrown" placeholder="e.g., Rice, Wheat" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; box-sizing: border-box;">
+                </div>
+            </div>
+            
+        
+<div id="workerFields" class="worker-fields">
+    <div style="margin-bottom: 15px;">
+        <label for="totalWorkTime" style="display: block; font-size: 18px; margin-bottom: 8px;">Total Work Time:</label>
+        <input type="text" id="totalWorkTime" name="totalWorkTime" placeholder="Enter total work time (e.g., 20 hours)" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; box-sizing: border-box;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="perHourRate" style="display: block; font-size: 18px; margin-bottom: 8px;">Per Hour Rate:</label>
+        <input type="number" id="perHourRate" name="perHourRate" placeholder="Enter per hour rate (₹)" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; box-sizing: border-box;">
+    </div>
+</div>
+
+        
+            <div id="adminPassKeyField" class="admin-passkey-field">
+                <label for="adminPassKey">Admin Pass Key:</label>
+                <input type="password" id="adminPassKey" name="adminPassKey" placeholder="Enter passkey">
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>

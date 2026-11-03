@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Connect - Home</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            background-color: #f8f8f8;
+        }
+
+        h1, h2, h4 {
+            font-weight: 400;
+        }
+
+       
+        .hero {
+            position: relative;
+            height: 100vh;
+            background-image: url('images/index-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .hero h2 {
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        /* Header with Links */
+        .header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+
+        .header a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header a:hover {
+            color: #4CAF50;
+        }
+
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="header">
+        <a href="login.html">Login</a>
+        <a href="about.html">About Us</a>
+    </div>
+
+    
+    <div class="hero">
+        <div>
+            <h1>Agri-Connect</h1>
+            <h2>Bringing Farmers Closer to Opportunities</h2>
+            <a href="register.html" class="cta-button">Get Started</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

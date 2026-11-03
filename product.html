@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - Agree Connect</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('images/add-product-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 700px;
+            margin: 40px auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border: 1px solid green;
+            outline: none;
+        }
+
+        button {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: darkgreen;
+        }
+
+        .image-preview {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .image-preview img {
+            max-width: 200px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .total-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+            margin-top: 10px;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Add New Product</h1>
+    </div>
+
+    <div class="content">
+        <div class="form-container">
+            <form id="addProductForm">
+                <label for="productName">Product Name:</label>
+                <input type="text" id="productName" name="productName" required>
+
+                <label for="productPrice">Price (₹):</label>
+                <input type="number" id="productPrice" name="productPrice" required>
+
+                <label for="productImage">Upload Product Image:</label>
+                <input type="file" id="productImage" accept="image/*" onchange="previewImage(event)">
+
+                <div class="image-preview" id="imagePreview">
+                    <label>Image Preview:</label>
+                    <img id="previewImg" src="" alt="Product Image Preview">
+                </div>
+
+                <label for="sellerName">Seller Name:</label>
+                <input type="text" id="sellerName" name="sellerName" required>
+
+                <label for="deliveryOption">Delivery Option:</label>
+                <select id="deliveryOption" name="deliveryOption">
+                    <option value="standard">Standard Delivery (3-5 days)</option>
+                    <option value="express">Express Delivery (1-2 days)</option>
+                </select>
+
+                <label for="productMargin">Platform Margin (%):</label>
+                <input type="number" id="productMargin" name="productMargin" required oninput="calculateTotalPrice()">
+
+                <div class="total-price" id="totalPriceContainer">
+                    Total Price (After Margin): ₹<span id="totalPrice"></span>
+                </div>
+
+                <label for="productDescription">Product Description:</label>
+                <textarea id="productDescription" name="productDescription" rows="4" required></textarea>
+
+                <button type="submit" onclick="addProduct(event)">Add Product</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        
+        function previewImage(event) {
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function calculateTotalPrice() {
+            const productPrice = document.getElementById('productPrice').value;
+            const productMargin = document.getElementById('productMargin').value;
+
+            if (productPrice && productMargin) {
+                const marginAmount = (productPrice * productMargin) / 100;
+                const totalPrice = parseFloat(productPrice) + parseFloat(marginAmount);
+                document.getElementById('totalPrice').innerText = totalPrice.toFixed(2);
+                document.getElementById('totalPriceContainer').style.display = 'block';
+            } else {
+                document.getElementById('totalPriceContainer').style.display = 'none';
+            }
+        }
+
+      
+        function addProduct(event) {
+            event.preventDefault();
+
+            const productName = document.getElementById('productName').value;
+            const productPrice = document.getElementById('productPrice').value;
+            const sellerName = document.getElementById('sellerName').value;
+            const deliveryOption = document.getElementById('deliveryOption').value;
+            const productMargin = document.getElementById('productMargin').value;
+            const productDescription = document.getElementById('productDescription').value;
+
+            if (productName && productPrice && sellerName && deliveryOption && productMargin && productDescription) {
+                alert(`Product Added Successfully!\nName: ${productName}\nPrice: ₹${productPrice}\nSeller: ${sellerName}`);
+          
+            } else {
+                alert('Please fill out all fields before submitting.');
+            }
+        }
+    </script>
+</body>
+</html>

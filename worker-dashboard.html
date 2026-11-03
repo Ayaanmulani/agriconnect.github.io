@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Dashboard</title>
+    <style>
+    body {
+        background-color: #121212;
+        background-image: url('images/worker-dashboard-background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        color: white;
+        position: relative;
+        overflow: auto;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('images/worker-dashboard-background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #4CAF50, #2E8B57);
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
+        font-size: 2.5em;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 1s ease;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: center;
+        background-color: #333;
+        padding: 12px 0;
+    }
+
+    .menu a {
+        color: white;
+        text-decoration: none;
+        padding: 15px 25px;
+        margin: 0 10px;
+        transition: background-color 0.3s ease, transform 0.2s;
+        border-radius: 30px;
+    }
+
+    .menu a:hover {
+        background-color: #4CAF50;
+        transform: scale(1.1);
+    }
+
+    .content {
+        padding: 50px 20px;
+        text-align: center;
+    }
+
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+        justify-content: center;
+        opacity: 0;
+        animation: fadeIn 1s forwards;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: 15px;
+        padding: 30px;
+        color: black;
+        box-shadow: 0 6px 16px rgba(0, 255, 0, 0.4);
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 255, 0, 0.6);
+    }
+
+    .button {
+        padding: 12px 30px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        margin: 10px 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .button:hover {
+        background-color: #45a049;
+        transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+</style>
+</head>
+<body>
+    <div class="header">Worker Dashboard</div>
+    <div class="menu">
+        <a href="worker-self-profile.php">Profile</a>
+        <a href="work_assignments.php">Assigned Work</a>
+        <a href="worker_history.php">Work History</a>
+        <a href="worker-withdraw.php">Withdraw Money</a>
+        <a href="logout.php">Logout</a>
+    </div>
+    <div class="content">
+        <h2>Work Requests</h2>
+        <div class="cards-container" id="cards-container">
+            <p>Loading work requests...</p>
+        </div>
+    </div>
+
+    <script>
+        fetch('fetch_worker_requests.php')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('cards-container');
+                container.innerHTML = '';
+
+                if (data.length > 0) {
+                    data.forEach(request => {
+                        const card = document.createElement('div');
+                        card.classList.add('card');
+                        card.id = `card-${request.id}`;
+
+                        card.innerHTML = `
+                            <h3>Work ID: ${request.id}</h3>
+                            <p><strong>Details:</strong> ${request.work_details}</p>
+                            <p><strong>Location:</strong> ${request.work_location}</p>
+                            <p><strong>Conditions:</strong> ${request.conditions || 'N/A'}</p>
+                            <p><strong>Crops:</strong> ${request.crops || 'N/A'}</p>
+                            <p><strong>Hours:</strong> ${request.hours}</p>
+                            <p><strong>Total Cost:</strong> ₹${request.total_cost}</p>
+                            <p><strong>Start Time:</strong> ${request.start_time}</p>
+                            <p><strong>End Time:</strong> ${request.end_time}</p>
+                            <p><strong>Selected Date:</strong> ${request.selected_date}</p>
+                            <button class="button" onclick="acceptWork(${request.id}, '${request.farmer_aadhar}', '${request.worker_aadhar}', '${request.work_details}', '${request.work_location}', '${request.conditions}', '${request.crops}', ${request.hours}, ${request.total_cost}, '${request.booking_date}', '${request.start_time}', '${request.end_time}', '${request.selected_date}')">Accept</button>
+                            <button class="button" onclick="updateStatus(${request.id}, 'declined')">Decline</button>
+                        `;
+
+                        container.appendChild(card);
+                    });
+                } else {
+                    container.innerHTML = '<p>No work requests available.</p>';
+                }
+            });
+
+        function acceptWork(id, farmer_aadhar, worker_aadhar, work_details, work_location, conditions, crops, hours, total_cost, booking_date, start_time, end_time, selected_date) {
+            fetch('assign_work.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, farmer_aadhar, worker_aadhar, work_details, work_location, conditions, crops, hours, total_cost, booking_date, start_time, end_time, selected_date })
+            })
+                .then(response => response.text())
+                .then(result => {
+                    alert(result);
+                    document.getElementById(`card-${id}`).remove();
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
